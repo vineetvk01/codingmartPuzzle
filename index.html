@@ -34,6 +34,9 @@
 			background-image: url('building.jpg');
 			background-size: 20px 20px;
 		}
+		.red{
+			color:red;
+		}
 	</style>
 </head>
 <body>
@@ -42,14 +45,20 @@
 			<img src="person.gif" alt="">
 		</div>
 	</div>
+	<p id="somed"></p>
+	<p id="somet"></p>
+    <p id="somex" class="red">Jump called !</p>
 	<script>
 		$(document).ready(function($) {
+			var height;
+			var width;
 			function createElement(height,width) {
 				newElement = $('<span/>',{
 					class: "pillar",
 				})
-				rightSize = width + 5
-				leftSize = width + 600 +5
+				rightSize = width + 5 ;
+				leftSize = width + 600 +5 ;
+
 				newElement.css({height: height+'px', width: width+'px',left: leftSize+'px'})
 				newElement.appendTo('.panel')
 				newElement.animate({
@@ -58,10 +67,12 @@
 					newElement.remove()
 					redraw()
 				});
+
 			}
 			function redraw(){
 				height = Math.floor(Math.random() * (300 - 10)) + 10
 				width = Math.floor(Math.random() * (300 - 30)) + 30
+				$("#somed").html("height:"+height+" | width:"+width);
 				createElement(height,width)
 			}
 			redraw()
@@ -73,11 +84,23 @@
 				})
 			}
 			checkPillar()
+			
 			function Jump(){
-				// your logic goes here
-				
-				
-			}
+					$("#somex").toggleClass("red");
+					
+					var n = parseInt($(".pillar").css("left"),10); //convert to get Int Value
+					
+					$("#somet").html("left:"+leftSize+" | right:"+rightSize+" | pillar:"+n);
+					
+					
+					if(n < 100){
+						$(".person").css({bottom: height});
+					}
+					if(n < -width){
+						$(".person").css({bottom: '0'});
+					}
+					//$(".person").animate({ bottom: '230px' }, 3000);
+				}
 		});
 	</script>
 </body>
